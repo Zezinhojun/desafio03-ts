@@ -3,18 +3,23 @@ import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { changeLocalStorage } from '../services/storage'
 import { AppContext } from './AppContext'
+import { UserInfo } from '../pages/UserInfo'
 
-export const Header  = () => {
+export const Header = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AppContext)
   const navigate = useNavigate()
 
   const logout = () => {
-    changeLocalStorage({ login: false})
+    changeLocalStorage({
+      login: false,
+      user: '',
+      password: ''
+    })
     setIsLoggedIn(false)
     navigate('/')
   }
 
-  return(
+  return (
     <Flex backgroundColor='orange' padding='5px'>
       <Box>
         <Center>
@@ -24,6 +29,7 @@ export const Header  = () => {
       {
         isLoggedIn && (
           <>
+            <UserInfo />
             <Spacer />
             <Button
               onClick={() => logout()}
@@ -34,6 +40,6 @@ export const Header  = () => {
         )
       }
     </Flex>
-    
+
   )
 }
